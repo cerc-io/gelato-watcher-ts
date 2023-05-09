@@ -1,0 +1,7 @@
+query condition($id: ID!, $block: Block_height){
+    condition(id: $id, block: $block){
+        id
+        inst
+        data
+    }
+}

@@ -1,0 +1,21 @@
+query taskReceipt($id: ID!, $block: Block_height){
+    taskReceipt(id: $id, block: $block){
+        id
+        userProxy
+        provider{
+            id
+            addr
+            module
+            taskCount
+        }
+        index
+        tasks{
+            id
+            selfProviderGasLimit
+            selfProviderGasPriceCeil
+        }
+        expiryDate
+        cycleId
+        submissionsLeft
+    }
+}

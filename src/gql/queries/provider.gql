@@ -1,0 +1,8 @@
+query provider($id: ID!, $block: Block_height){
+    provider(id: $id, block: $block){
+        id
+        addr
+        module
+        taskCount
+    }
+}

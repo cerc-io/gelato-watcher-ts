@@ -1,0 +1,11 @@
+query action($id: ID!, $block: Block_height){
+    action(id: $id, block: $block){
+        id
+        addr
+        data
+        operation
+        dataFlow
+        value
+        termsOkCheck
+    }
+}

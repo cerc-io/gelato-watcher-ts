@@ -1,0 +1,26 @@
+query taskReceiptWrapper($id: ID!, $block: Block_height){
+    taskReceiptWrapper(id: $id, block: $block){
+        id
+        user{
+            id
+            address
+            signUpDate
+            executor
+        }
+        taskReceipt{
+            id
+            userProxy
+            index
+            expiryDate
+            cycleId
+            submissionsLeft
+        }
+        submissionHash
+        status
+        submissionDate
+        selectedExecutor
+        executionDate
+        executionHash
+        selfProvided
+    }
+}
