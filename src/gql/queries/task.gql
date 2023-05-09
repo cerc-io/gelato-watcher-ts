@@ -1,0 +1,21 @@
+query task($id: ID!, $block: Block_height){
+    task(id: $id, block: $block){
+        id
+        conditions{
+            id
+            inst
+            data
+        }
+        actions{
+            id
+            addr
+            data
+            operation
+            dataFlow
+            value
+            termsOkCheck
+        }
+        selfProviderGasLimit
+        selfProviderGasPriceCeil
+    }
+}

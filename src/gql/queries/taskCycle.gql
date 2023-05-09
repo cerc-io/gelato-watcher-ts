@@ -1,0 +1,15 @@
+query taskCycle($id: ID!, $block: Block_height){
+    taskCycle(id: $id, block: $block){
+        id
+        taskReceiptWrappers{
+            id
+            submissionHash
+            status
+            submissionDate
+            selectedExecutor
+            executionDate
+            executionHash
+            selfProvided
+        }
+    }
+}

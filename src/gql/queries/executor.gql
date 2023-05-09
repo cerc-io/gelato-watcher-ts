@@ -1,0 +1,6 @@
+query executor($id: ID!, $block: Block_height){
+    executor(id: $id, block: $block){
+        id
+        addr
+    }
+}

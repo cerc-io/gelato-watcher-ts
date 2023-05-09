@@ -1,0 +1,305 @@
+directive @cacheControl(maxAge: Int, inheritMaxAge: Boolean, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE | UNION
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+scalar BigInt
+
+scalar BigDecimal
+
+scalar Bytes
+
+type Proof {
+  data: String!
+}
+
+type _Block_ {
+  cid: String!
+  hash: String!
+  number: Int!
+  timestamp: Int!
+  parentHash: String!
+}
+
+type _Transaction_ {
+  hash: String!
+  index: Int!
+  from: String!
+  to: String!
+}
+
+type ResultEvent {
+  block: _Block_!
+  tx: _Transaction_!
+  contract: String!
+  eventIndex: Int!
+  event: Event!
+  proof: Proof
+}
+
+union Event = LogCanExecFailedEvent | LogExecRevertedEvent | LogExecSuccessEvent | LogExecutorAssignedExecutorEvent | LogExecutorBalanceWithdrawnEvent | LogExecutorStakedEvent | LogExecutorSuccessShareSetEvent | LogExecutorUnstakedEvent | LogFundsProvidedEvent | LogFundsUnprovidedEvent | LogGelatoGasPriceOracleSetEvent | LogGelatoMaxGasSetEvent | LogInternalGasRequirementSetEvent | LogMinExecutorStakeSetEvent | LogOracleRequestDataSetEvent | LogProviderAssignedExecutorEvent | LogProviderModuleAddedEvent | LogProviderModuleRemovedEvent | LogSysAdminFundsWithdrawnEvent | LogSysAdminSuccessShareSetEvent | LogTaskCancelledEvent | LogTaskSpecGasPriceCeilSetEvent | LogTaskSpecProvidedEvent | LogTaskSpecUnprovidedEvent | OwnershipTransferredEvent
+
+type LogCanExecFailedEvent {
+  executor: String!
+  taskReceiptId: BigInt!
+  reason: String!
+}
+
+type LogExecRevertedEvent {
+  executor: String!
+  taskReceiptId: BigInt!
+  executorRefund: BigInt!
+  reason: String!
+}
+
+type LogExecSuccessEvent {
+  executor: String!
+  taskReceiptId: BigInt!
+  executorSuccessFee: BigInt!
+  sysAdminSuccessFee: BigInt!
+}
+
+type LogExecutorAssignedExecutorEvent {
+  provider: String!
+  oldExecutor: String!
+  newExecutor: String!
+}
+
+type LogExecutorBalanceWithdrawnEvent {
+  executor: String!
+  withdrawAmount: BigInt!
+}
+
+type LogExecutorStakedEvent {
+  executor: String!
+  oldStake: BigInt!
+  newStake: BigInt!
+}
+
+type LogExecutorSuccessShareSetEvent {
+  oldShare: BigInt!
+  newShare: BigInt!
+  total: BigInt!
+}
+
+type LogExecutorUnstakedEvent {
+  executor: String!
+}
+
+type LogFundsProvidedEvent {
+  provider: String!
+  amount: BigInt!
+  newProviderFunds: BigInt!
+}
+
+type LogFundsUnprovidedEvent {
+  provider: String!
+  realWithdrawAmount: BigInt!
+  newProviderFunds: BigInt!
+}
+
+type LogGelatoGasPriceOracleSetEvent {
+  oldOracle: String!
+  newOracle: String!
+}
+
+type LogGelatoMaxGasSetEvent {
+  oldMaxGas: BigInt!
+  newMaxGas: BigInt!
+}
+
+type LogInternalGasRequirementSetEvent {
+  oldRequirment: BigInt!
+  newRequirment: BigInt!
+}
+
+type LogMinExecutorStakeSetEvent {
+  oldMin: BigInt!
+  newMin: BigInt!
+}
+
+type LogOracleRequestDataSetEvent {
+  oldData: String!
+  newData: String!
+}
+
+type LogProviderAssignedExecutorEvent {
+  provider: String!
+  oldExecutor: String!
+  newExecutor: String!
+}
+
+type LogProviderModuleAddedEvent {
+  provider: String!
+  module: String!
+}
+
+type LogProviderModuleRemovedEvent {
+  provider: String!
+  module: String!
+}
+
+type LogSysAdminFundsWithdrawnEvent {
+  oldBalance: BigInt!
+  newBalance: BigInt!
+}
+
+type LogSysAdminSuccessShareSetEvent {
+  oldShare: BigInt!
+  newShare: BigInt!
+  total: BigInt!
+}
+
+type LogTaskCancelledEvent {
+  taskReceiptId: BigInt!
+  cancellor: String!
+}
+
+type LogTaskSpecGasPriceCeilSetEvent {
+  provider: String!
+  taskSpecHash: String!
+  oldTaskSpecGasPriceCeil: BigInt!
+  newTaskSpecGasPriceCeil: BigInt!
+}
+
+type LogTaskSpecProvidedEvent {
+  provider: String!
+  taskSpecHash: String!
+}
+
+type LogTaskSpecUnprovidedEvent {
+  provider: String!
+  taskSpecHash: String!
+}
+
+type OwnershipTransferredEvent {
+  previousOwner: String!
+  newOwner: String!
+}
+
+input Block_height {
+  hash: Bytes
+  number: Int
+}
+
+type SyncStatus {
+  latestIndexedBlockHash: String!
+  latestIndexedBlockNumber: Int!
+  latestCanonicalBlockHash: String!
+  latestCanonicalBlockNumber: Int!
+}
+
+type ResultState {
+  block: _Block_!
+  contractAddress: String!
+  cid: String!
+  kind: String!
+  data: String!
+}
+
+type Query {
+  events(blockHash: String!, contractAddress: String!, name: String): [ResultEvent!]
+  eventsInRange(fromBlockNumber: Int!, toBlockNumber: Int!): [ResultEvent!]
+  user(id: ID!, block: Block_height): User!
+  taskReceiptWrapper(id: ID!, block: Block_height): TaskReceiptWrapper!
+  taskReceipt(id: ID!, block: Block_height): TaskReceipt!
+  taskCycle(id: ID!, block: Block_height): TaskCycle!
+  task(id: ID!, block: Block_height): Task!
+  provider(id: ID!, block: Block_height): Provider!
+  condition(id: ID!, block: Block_height): Condition!
+  action(id: ID!, block: Block_height): Action!
+  executor(id: ID!, block: Block_height): Executor!
+  getSyncStatus: SyncStatus
+  getStateByCID(cid: String!): ResultState
+  getState(blockHash: String!, contractAddress: String!, kind: String): ResultState
+}
+
+type User {
+  id: ID!
+  address: Bytes!
+  signUpDate: BigInt!
+  executor: Bytes
+}
+
+type TaskReceiptWrapper {
+  id: ID!
+  user: User!
+  taskReceipt: TaskReceipt!
+  submissionHash: Bytes!
+  status: TaskReceiptStatus!
+  submissionDate: BigInt!
+  selectedExecutor: Bytes!
+  executionDate: BigInt
+  executionHash: Bytes
+  selfProvided: Boolean!
+}
+
+type TaskReceipt {
+  id: ID!
+  userProxy: Bytes!
+  provider: Provider!
+  index: BigInt!
+  tasks: [Task!]
+  expiryDate: BigInt!
+  cycleId: BigInt!
+  submissionsLeft: BigInt!
+}
+
+type Provider {
+  id: ID!
+  addr: Bytes!
+  module: Bytes!
+  taskCount: BigInt!
+}
+
+type Task {
+  id: ID!
+  conditions: [Condition!]
+  actions: [Action!]
+  selfProviderGasLimit: BigInt!
+  selfProviderGasPriceCeil: BigInt!
+}
+
+type Condition {
+  id: ID!
+  inst: Bytes!
+  data: Bytes!
+}
+
+type Action {
+  id: ID!
+  addr: Bytes!
+  data: Bytes!
+  operation: BigInt!
+  dataFlow: BigInt!
+  value: BigInt!
+  termsOkCheck: Boolean!
+}
+
+enum TaskReceiptStatus {
+  awaitingExec
+  execSuccess
+  execReverted
+  canceled
+  expired
+}
+
+type TaskCycle {
+  id: ID!
+  taskReceiptWrappers: [TaskReceiptWrapper!]!
+}
+
+type Executor {
+  id: ID!
+  addr: Bytes!
+}
+
+type Mutation {
+  watchContract(address: String!, kind: String!, checkpoint: Boolean!, startingBlock: Int): Boolean!
+}
+
+type Subscription {
+  onEvent: ResultEvent!
+}

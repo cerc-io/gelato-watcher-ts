@@ -1,0 +1,137 @@
+query eventsInRange($fromBlockNumber: Int!, $toBlockNumber: Int!){
+    eventsInRange(fromBlockNumber: $fromBlockNumber, toBlockNumber: $toBlockNumber){
+        block{
+            cid
+            hash
+            number
+            timestamp
+            parentHash
+        }
+        tx{
+            hash
+            index
+            from
+            to
+        }
+        contract
+        eventIndex
+        event{
+            ... on LogCanExecFailedEvent {
+                executor
+                taskReceiptId
+                reason
+            }
+            ... on LogExecRevertedEvent {
+                executor
+                taskReceiptId
+                executorRefund
+                reason
+            }
+            ... on LogExecSuccessEvent {
+                executor
+                taskReceiptId
+                executorSuccessFee
+                sysAdminSuccessFee
+            }
+            ... on LogExecutorAssignedExecutorEvent {
+                provider
+                oldExecutor
+                newExecutor
+            }
+            ... on LogExecutorBalanceWithdrawnEvent {
+                executor
+                withdrawAmount
+            }
+            ... on LogExecutorStakedEvent {
+                executor
+                oldStake
+                newStake
+            }
+            ... on LogExecutorSuccessShareSetEvent {
+                oldShare
+                newShare
+                total
+            }
+            ... on LogExecutorUnstakedEvent {
+                executor
+            }
+            ... on LogFundsProvidedEvent {
+                provider
+                amount
+                newProviderFunds
+            }
+            ... on LogFundsUnprovidedEvent {
+                provider
+                realWithdrawAmount
+                newProviderFunds
+            }
+            ... on LogGelatoGasPriceOracleSetEvent {
+                oldOracle
+                newOracle
+            }
+            ... on LogGelatoMaxGasSetEvent {
+                oldMaxGas
+                newMaxGas
+            }
+            ... on LogInternalGasRequirementSetEvent {
+                oldRequirment
+                newRequirment
+            }
+            ... on LogMinExecutorStakeSetEvent {
+                oldMin
+                newMin
+            }
+            ... on LogOracleRequestDataSetEvent {
+                oldData
+                newData
+            }
+            ... on LogProviderAssignedExecutorEvent {
+                provider
+                oldExecutor
+                newExecutor
+            }
+            ... on LogProviderModuleAddedEvent {
+                provider
+                module
+            }
+            ... on LogProviderModuleRemovedEvent {
+                provider
+                module
+            }
+            ... on LogSysAdminFundsWithdrawnEvent {
+                oldBalance
+                newBalance
+            }
+            ... on LogSysAdminSuccessShareSetEvent {
+                oldShare
+                newShare
+                total
+            }
+            ... on LogTaskCancelledEvent {
+                taskReceiptId
+                cancellor
+            }
+            ... on LogTaskSpecGasPriceCeilSetEvent {
+                provider
+                taskSpecHash
+                oldTaskSpecGasPriceCeil
+                newTaskSpecGasPriceCeil
+            }
+            ... on LogTaskSpecProvidedEvent {
+                provider
+                taskSpecHash
+            }
+            ... on LogTaskSpecUnprovidedEvent {
+                provider
+                taskSpecHash
+            }
+            ... on OwnershipTransferredEvent {
+                previousOwner
+                newOwner
+            }
+        }
+        proof{
+            data
+        }
+    }
+}
