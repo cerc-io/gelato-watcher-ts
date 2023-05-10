@@ -39,7 +39,7 @@ type ResultEvent {
   proof: Proof
 }
 
-union Event = LogCanExecFailedEvent | LogExecRevertedEvent | LogExecSuccessEvent | LogExecutorAssignedExecutorEvent | LogExecutorBalanceWithdrawnEvent | LogExecutorStakedEvent | LogExecutorSuccessShareSetEvent | LogExecutorUnstakedEvent | LogFundsProvidedEvent | LogFundsUnprovidedEvent | LogGelatoGasPriceOracleSetEvent | LogGelatoMaxGasSetEvent | LogInternalGasRequirementSetEvent | LogMinExecutorStakeSetEvent | LogOracleRequestDataSetEvent | LogProviderAssignedExecutorEvent | LogProviderModuleAddedEvent | LogProviderModuleRemovedEvent | LogSysAdminFundsWithdrawnEvent | LogSysAdminSuccessShareSetEvent | LogTaskCancelledEvent | LogTaskSpecGasPriceCeilSetEvent | LogTaskSpecProvidedEvent | LogTaskSpecUnprovidedEvent | OwnershipTransferredEvent
+union Event = LogCanExecFailedEvent | LogExecRevertedEvent | LogExecSuccessEvent | LogExecutorAssignedExecutorEvent | LogExecutorBalanceWithdrawnEvent | LogExecutorStakedEvent | LogExecutorSuccessShareSetEvent | LogExecutorUnstakedEvent | LogFundsProvidedEvent | LogFundsUnprovidedEvent | LogGelatoGasPriceOracleSetEvent | LogGelatoMaxGasSetEvent | LogInternalGasRequirementSetEvent | LogMinExecutorStakeSetEvent | LogOracleRequestDataSetEvent | LogProviderAssignedExecutorEvent | LogProviderModuleAddedEvent | LogProviderModuleRemovedEvent | LogSysAdminFundsWithdrawnEvent | LogSysAdminSuccessShareSetEvent | LogTaskCancelledEvent | LogTaskSpecGasPriceCeilSetEvent | LogTaskSpecProvidedEvent | LogTaskSpecUnprovidedEvent | LogTaskSubmittedEvent | OwnershipTransferredEvent
 
 type LogCanExecFailedEvent {
   executor: String!
@@ -174,6 +174,49 @@ type LogTaskSpecUnprovidedEvent {
   taskSpecHash: String!
 }
 
+type LogTaskSubmittedEvent {
+  taskReceiptId: BigInt!
+  taskReceiptHash: String!
+  taskReceipt: TaskReceipt!
+}
+
+type TaskReceipt {
+  id: BigInt!
+  userProxy: String!
+  provider: Provider!
+  index: BigInt!
+  tasks: [Task!]
+  expiryDate: BigInt!
+  cycleId: BigInt!
+  submissionsLeft: BigInt!
+}
+
+type Provider {
+  addr: String!
+  module: String!
+}
+
+type Task {
+  conditions: [Condition!]
+  actions: [Action!]
+  selfProviderGasLimit: BigInt!
+  selfProviderGasPriceCeil: BigInt!
+}
+
+type Condition {
+  inst: String!
+  data: String!
+}
+
+type Action {
+  addr: String!
+  data: String!
+  operation: BigInt!
+  dataFlow: BigInt!
+  value: BigInt!
+  termsOkCheck: Boolean!
+}
+
 type OwnershipTransferredEvent {
   previousOwner: String!
   newOwner: String!
@@ -204,12 +247,12 @@ type Query {
   eventsInRange(fromBlockNumber: Int!, toBlockNumber: Int!): [ResultEvent!]
   user(id: ID!, block: Block_height): User!
   taskReceiptWrapper(id: ID!, block: Block_height): TaskReceiptWrapper!
-  taskReceipt(id: ID!, block: Block_height): TaskReceipt!
+  taskReceipt(id: ID!, block: Block_height): TaskReceipt_!
   taskCycle(id: ID!, block: Block_height): TaskCycle!
-  task(id: ID!, block: Block_height): Task!
-  provider(id: ID!, block: Block_height): Provider!
-  condition(id: ID!, block: Block_height): Condition!
-  action(id: ID!, block: Block_height): Action!
+  task(id: ID!, block: Block_height): Task_!
+  provider(id: ID!, block: Block_height): Provider_!
+  condition(id: ID!, block: Block_height): Condition_!
+  action(id: ID!, block: Block_height): Action_!
   executor(id: ID!, block: Block_height): Executor!
   getSyncStatus: SyncStatus
   getStateByCID(cid: String!): ResultState
@@ -226,7 +269,7 @@ type User {
 type TaskReceiptWrapper {
   id: ID!
   user: User!
-  taskReceipt: TaskReceipt!
+  taskReceipt: TaskReceipt_!
   submissionHash: Bytes!
   status: TaskReceiptStatus!
   submissionDate: BigInt!
@@ -236,39 +279,39 @@ type TaskReceiptWrapper {
   selfProvided: Boolean!
 }
 
-type TaskReceipt {
+type TaskReceipt_ {
   id: ID!
   userProxy: Bytes!
-  provider: Provider!
+  provider: Provider_!
   index: BigInt!
-  tasks: [Task!]
+  tasks: [Task_!]
   expiryDate: BigInt!
   cycleId: BigInt!
   submissionsLeft: BigInt!
 }
 
-type Provider {
+type Provider_ {
   id: ID!
   addr: Bytes!
   module: Bytes!
   taskCount: BigInt!
 }
 
-type Task {
+type Task_ {
   id: ID!
-  conditions: [Condition!]
-  actions: [Action!]
+  conditions: [Condition_!]
+  actions: [Action_!]
   selfProviderGasLimit: BigInt!
   selfProviderGasPriceCeil: BigInt!
 }
 
-type Condition {
+type Condition_ {
   id: ID!
   inst: Bytes!
   data: Bytes!
 }
 
-type Action {
+type Action_ {
   id: ID!
   addr: Bytes!
   data: Bytes!
