@@ -34,7 +34,6 @@ import {
 import { GraphWatcher } from '@cerc-io/graph-node';
 
 import GelatoCoreArtifacts from './artifacts/GelatoCore.json';
-import ContractArtifacts from './artifacts/Contract.json';
 import { Database, ENTITIES, SUBGRAPH_ENTITIES } from './database';
 import { createInitialState, handleEvent, createStateDiff, createStateCheckpoint } from './hooks';
 import { Contract } from './entity/Contract';
@@ -60,9 +59,7 @@ import { FrothyEntity } from './entity/FrothyEntity';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const log = debug('vulcanize:indexer');
 
-const KIND_GELATOCORE = 'ethereum/contract';
-
-const KIND_CONTRACT = 'Contract';
+const KIND_GELATOCORE = 'Contract';
 
 export class Indexer implements IndexerInterface {
   _db: Database;
@@ -99,17 +96,11 @@ export class Indexer implements IndexerInterface {
 
     const { abi: GelatoCoreABI, storageLayout: GelatoCoreStorageLayout } = GelatoCoreArtifacts;
 
-    const { abi: ContractABI } = ContractArtifacts;
-
     assert(GelatoCoreABI);
     this._abiMap.set(KIND_GELATOCORE, GelatoCoreABI);
     assert(GelatoCoreStorageLayout);
     this._storageLayoutMap.set(KIND_GELATOCORE, GelatoCoreStorageLayout);
     this._contractMap.set(KIND_GELATOCORE, new ethers.utils.Interface(GelatoCoreABI));
-
-    assert(ContractABI);
-    this._abiMap.set(KIND_CONTRACT, ContractABI);
-    this._contractMap.set(KIND_CONTRACT, new ethers.utils.Interface(ContractABI));
 
     this._entityTypesMap = new Map();
     this._populateEntityTypesMap();
