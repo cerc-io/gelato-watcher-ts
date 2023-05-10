@@ -5,8 +5,8 @@ contracts:
   - name: GelatoCore
     # Contract file path or an url.
     path: ~/gelatodigital/gelato-network/contracts/gelato_core/GelatoCore.sol
-    # Contract kind (should match that in {subgraphPath}/subgraph.yaml if subgraphPath provided)
-    kind: ethereum/contract
+    # Contract kind (should match the dataSource name in {subgraphPath}/subgraph.yaml if subgraphPath provided)
+    kind: Contract
 
 # Output folder path (logs output using `stdout` if not provided).
 outputFolder: ~/gelato-watcher-ts
