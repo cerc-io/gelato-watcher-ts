@@ -177,38 +177,38 @@ type LogTaskSpecUnprovidedEvent {
 type LogTaskSubmittedEvent {
   taskReceiptId: BigInt!
   taskReceiptHash: String!
-  taskReceipt: TaskReceipt!
+  taskReceipt: TaskReceipt_!
 }
 
-type TaskReceipt {
+type TaskReceipt_ {
   id: BigInt!
   userProxy: String!
-  provider: Provider!
+  provider: Provider_!
   index: BigInt!
-  tasks: [Task!]
+  tasks: [Task_!]
   expiryDate: BigInt!
   cycleId: BigInt!
   submissionsLeft: BigInt!
 }
 
-type Provider {
+type Provider_ {
   addr: String!
   module: String!
 }
 
-type Task {
-  conditions: [Condition!]
-  actions: [Action!]
+type Task_ {
+  conditions: [Condition_!]
+  actions: [Action_!]
   selfProviderGasLimit: BigInt!
   selfProviderGasPriceCeil: BigInt!
 }
 
-type Condition {
+type Condition_ {
   inst: String!
   data: String!
 }
 
-type Action {
+type Action_ {
   addr: String!
   data: String!
   operation: BigInt!
@@ -247,12 +247,12 @@ type Query {
   eventsInRange(fromBlockNumber: Int!, toBlockNumber: Int!): [ResultEvent!]
   user(id: ID!, block: Block_height): User!
   taskReceiptWrapper(id: ID!, block: Block_height): TaskReceiptWrapper!
-  taskReceipt(id: ID!, block: Block_height): TaskReceipt_!
+  taskReceipt(id: ID!, block: Block_height): TaskReceipt!
   taskCycle(id: ID!, block: Block_height): TaskCycle!
-  task(id: ID!, block: Block_height): Task_!
-  provider(id: ID!, block: Block_height): Provider_!
-  condition(id: ID!, block: Block_height): Condition_!
-  action(id: ID!, block: Block_height): Action_!
+  task(id: ID!, block: Block_height): Task!
+  provider(id: ID!, block: Block_height): Provider!
+  condition(id: ID!, block: Block_height): Condition!
+  action(id: ID!, block: Block_height): Action!
   executor(id: ID!, block: Block_height): Executor!
   getSyncStatus: SyncStatus
   getStateByCID(cid: String!): ResultState
@@ -269,7 +269,7 @@ type User {
 type TaskReceiptWrapper {
   id: ID!
   user: User!
-  taskReceipt: TaskReceipt_!
+  taskReceipt: TaskReceipt!
   submissionHash: Bytes!
   status: TaskReceiptStatus!
   submissionDate: BigInt!
@@ -279,39 +279,39 @@ type TaskReceiptWrapper {
   selfProvided: Boolean!
 }
 
-type TaskReceipt_ {
+type TaskReceipt {
   id: ID!
   userProxy: Bytes!
-  provider: Provider_!
+  provider: Provider!
   index: BigInt!
-  tasks: [Task_!]
+  tasks: [Task!]
   expiryDate: BigInt!
   cycleId: BigInt!
   submissionsLeft: BigInt!
 }
 
-type Provider_ {
+type Provider {
   id: ID!
   addr: Bytes!
   module: Bytes!
   taskCount: BigInt!
 }
 
-type Task_ {
+type Task {
   id: ID!
-  conditions: [Condition_!]
-  actions: [Action_!]
+  conditions: [Condition!]
+  actions: [Action!]
   selfProviderGasLimit: BigInt!
   selfProviderGasPriceCeil: BigInt!
 }
 
-type Condition_ {
+type Condition {
   id: ID!
   inst: Bytes!
   data: Bytes!
 }
 
-type Action_ {
+type Action {
   id: ID!
   addr: Bytes!
   data: Bytes!
