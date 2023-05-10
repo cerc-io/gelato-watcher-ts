@@ -125,6 +125,34 @@ query eventsInRange($fromBlockNumber: Int!, $toBlockNumber: Int!){
                 provider
                 taskSpecHash
             }
+            ... on LogTaskSubmittedEvent {
+                taskReceiptId
+                taskReceiptHash
+                taskReceipt{
+                    id
+                    userProxy
+                    index
+                    tasks {
+                        conditions {
+                            inst
+                            data
+                        }
+                        actions {
+                            addr
+                            data
+                            operation
+                            dataFlow
+                            value
+                            termsOkCheck
+                        }
+                        selfProviderGasLimit
+                        selfProviderGasPriceCeil
+                    }
+                    expiryDate
+                    cycleId
+                    submissionsLeft
+                }
+            }
             ... on OwnershipTransferredEvent {
                 previousOwner
                 newOwner
