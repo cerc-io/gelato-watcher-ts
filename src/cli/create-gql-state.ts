@@ -5,25 +5,30 @@
 import debug from 'debug';
 import assert from 'assert';
 import pluralize from 'pluralize';
+import { merge } from 'lodash';
+import path from 'path';
+import fs from 'fs';
+import { ethers } from 'ethers';
 
 import { gql } from '@apollo/client/core';
 import { getGraphDbAndWatcher } from '@cerc-io/graph-node';
-import { getContractEntitiesMap, prepareGQLEntityState, updateSubgraphState } from '@cerc-io/util';
+import { BlockProgressInterface, StateKind, createOrUpdateStateData, getContractEntitiesMap, prepareGQLEntityState } from '@cerc-io/util';
 import { JobRunnerCmd } from '@cerc-io/cli';
+import { GraphQLClient } from '@cerc-io/ipld-eth-client';
 
 import { Database, ENTITY_QUERY_TYPE_MAP, ENTITY_TO_LATEST_ENTITY_MAP } from '../database';
 import { Indexer } from '../indexer';
 import { queries } from '../gql';
-import { GraphQLClient } from '@cerc-io/ipld-eth-client';
 
 const log = debug('vulcanize:create-state-gql');
 
 const ENTITIES_QUERY_LIMIT = 1000;
 
 // TODO: Use CLI params for constants below
+const SUBGRAPH_GQL_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/gelatodigital/gelato-network';
+const EXPORT_FILE = './gql-export';
 // Use block before latest blocks (13616470, 13616513) with LogSubmittedTask event
 const SNAPSHOT_BLOCKHASH = '0x04e05ce800edf03c10e7aacb0d64276d68826cb31abaa45221a2627836ca2872';
-const SUBGRAPH_GQL_ENDPOINT = 'https://api.thegraph.com/subgraphs/name/gelatodigital/gelato-network';
 
 const main = async (): Promise<void> => {
   // TODO: Replace with CreateGQLStateCmd
@@ -41,14 +46,40 @@ const main = async (): Promise<void> => {
 
   await jobRunnerCmd.initIndexer(Indexer, graphWatcher);
   const indexer = jobRunnerCmd.indexer;
+  const database = jobRunnerCmd.database;
 
-  // const exportData: any = {
-  //   snapshotBlock: {},
-  //   contracts: [],
-  //   stateCheckpoints: []
-  // };
+  const [block] = await indexer.getBlocks({ blockHash: SNAPSHOT_BLOCKHASH });
 
-  // TODO: Set snapshotBlock and contracts using watcher config and graphWatcher
+  if (!block) {
+    log(`No blocks fetched for block hash ${SNAPSHOT_BLOCKHASH}, use an existing block`);
+    return;
+  }
+
+  const blockProgress: Partial<BlockProgressInterface> = {
+    ...block,
+    blockNumber: Number(block.blockNumber)
+  };
+
+  // Get watched contracts using graphWatcher
+  const watchedContracts = graphWatcher.dataSources.map(dataSource => {
+    const { source: { address, startBlock }, name } = dataSource;
+
+    return {
+      address: ethers.utils.getAddress(address),
+      kind: name,
+      checkpoint: true,
+      startingBlock: startBlock
+    };
+  });
+
+  const exportData: any = {
+    snapshotBlock: {
+      blockNumber: blockProgress.blockNumber,
+      blockHash: blockProgress.blockHash
+    },
+    contracts: watchedContracts,
+    stateCheckpoints: []
+  };
 
   // Get contractEntitiesMap
   // NOTE: Assuming each entity type is only mapped to a single contract
@@ -56,7 +87,6 @@ const main = async (): Promise<void> => {
   const contractEntitiesMap = getContractEntitiesMap(graphWatcher.dataSources);
 
   const gqlClient = new GraphQLClient({ gqlEndpoint: SUBGRAPH_GQL_ENDPOINT });
-  const subgraphStateMap = new Map();
 
   // Update state in a map for each contract in contractEntitiesMap
   const contractStatePromises = Array.from(contractEntitiesMap.entries())
@@ -69,6 +99,8 @@ const main = async (): Promise<void> => {
 
       const updatedEntitiesList = await Promise.all(updatedEntitiesListPromises);
 
+      let checkpointData = { state: {} };
+
       // Populate state with all the updated entities of each entity type
       updatedEntitiesList.forEach((updatedEntities, index) => {
         const entityName = entities[index];
@@ -79,29 +111,46 @@ const main = async (): Promise<void> => {
           // Prepare diff data for the entity update
           const diffData = prepareGQLEntityState(updatedEntity, entityName, indexer.getRelationsMap());
 
-          // Update the in-memory subgraph state
-          updateSubgraphState(subgraphStateMap, contractAddress, diffData);
+          // Merge diffData for each entity
+          checkpointData = merge(checkpointData, diffData);
         });
+      });
+
+      const { cid, data } = await createOrUpdateStateData(
+        checkpointData,
+        contractAddress,
+        blockProgress,
+        StateKind.Checkpoint
+      );
+
+      assert(data.meta);
+
+      exportData.stateCheckpoints.push({
+        contractAddress,
+        cid: cid.toString(),
+        kind: data.meta.kind,
+        data
       });
     });
 
   await Promise.all(contractStatePromises);
 
-  console.log('subgraphStateMap', subgraphStateMap);
+  if (EXPORT_FILE) {
+    const codec = await import('@ipld/dag-cbor');
+    const encodedExportData = codec.encode(exportData);
 
-  // TODO: Prepare checkpoint state from subgraphStateMap
-  // const state = await this.prepareStateEntry(currentBlock, contractAddress, data, StateKind.Checkpoint);
+    const filePath = path.resolve(EXPORT_FILE);
+    const fileDir = path.dirname(filePath);
 
-  // const data = indexer.getStateData(state);
+    if (!fs.existsSync(fileDir)) fs.mkdirSync(fileDir, { recursive: true });
 
-  // exportData.stateCheckpoints.push({
-  //   contractAddress: state.contractAddress,
-  //   cid: state.cid,
-  //   kind: state.kind,
-  //   data
-  // });
+    fs.writeFileSync(filePath, encodedExportData);
+  } else {
+    log(exportData);
+  }
 
-  // TODO: Export state
+  log(`Export completed at height ${blockProgress.blockNumber}`);
+  await database.close();
 };
 
 const getGQLEntitiesForBlock = async (gqlClient: GraphQLClient, entityName: string, blockHash: string) => {
@@ -119,7 +168,10 @@ const getGQLEntitiesForBlock = async (gqlClient: GraphQLClient, entityName: stri
 
   const data = await gqlClient.query(
     gql(gqlQuery),
-    { block, first: ENTITIES_QUERY_LIMIT }
+    {
+      block,
+      first: ENTITIES_QUERY_LIMIT
+    }
   );
 
   return data[queryName];
