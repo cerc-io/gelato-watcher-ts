@@ -39,7 +39,7 @@ type ResultEvent {
   proof: Proof
 }
 
-union Event = LogCanExecFailedEvent | LogExecRevertedEvent | LogExecSuccessEvent | LogExecutorAssignedExecutorEvent | LogExecutorBalanceWithdrawnEvent | LogExecutorStakedEvent | LogExecutorSuccessShareSetEvent | LogExecutorUnstakedEvent | LogFundsProvidedEvent | LogFundsUnprovidedEvent | LogGelatoGasPriceOracleSetEvent | LogGelatoMaxGasSetEvent | LogInternalGasRequirementSetEvent | LogMinExecutorStakeSetEvent | LogOracleRequestDataSetEvent | LogProviderAssignedExecutorEvent | LogProviderModuleAddedEvent | LogProviderModuleRemovedEvent | LogSysAdminFundsWithdrawnEvent | LogSysAdminSuccessShareSetEvent | LogTaskCancelledEvent | LogTaskSpecGasPriceCeilSetEvent | LogTaskSpecProvidedEvent | LogTaskSpecUnprovidedEvent | OwnershipTransferredEvent
+union Event = LogCanExecFailedEvent | LogExecRevertedEvent | LogExecSuccessEvent | LogExecutorAssignedExecutorEvent | LogExecutorBalanceWithdrawnEvent | LogExecutorStakedEvent | LogExecutorSuccessShareSetEvent | LogExecutorUnstakedEvent | LogFundsProvidedEvent | LogFundsUnprovidedEvent | LogGelatoGasPriceOracleSetEvent | LogGelatoMaxGasSetEvent | LogInternalGasRequirementSetEvent | LogMinExecutorStakeSetEvent | LogOracleRequestDataSetEvent | LogProviderAssignedExecutorEvent | LogProviderModuleAddedEvent | LogProviderModuleRemovedEvent | LogSysAdminFundsWithdrawnEvent | LogSysAdminSuccessShareSetEvent | LogTaskCancelledEvent | LogTaskSpecGasPriceCeilSetEvent | LogTaskSpecProvidedEvent | LogTaskSpecUnprovidedEvent | LogTaskSubmittedEvent | OwnershipTransferredEvent
 
 type LogCanExecFailedEvent {
   executor: String!
@@ -172,6 +172,49 @@ type LogTaskSpecProvidedEvent {
 type LogTaskSpecUnprovidedEvent {
   provider: String!
   taskSpecHash: String!
+}
+
+type LogTaskSubmittedEvent {
+  taskReceiptId: BigInt!
+  taskReceiptHash: String!
+  taskReceipt: TaskReceipt_!
+}
+
+type TaskReceipt_ {
+  id: BigInt!
+  userProxy: String!
+  provider: Provider_!
+  index: BigInt!
+  tasks: [Task_!]
+  expiryDate: BigInt!
+  cycleId: BigInt!
+  submissionsLeft: BigInt!
+}
+
+type Provider_ {
+  addr: String!
+  module: String!
+}
+
+type Task_ {
+  conditions: [Condition_!]
+  actions: [Action_!]
+  selfProviderGasLimit: BigInt!
+  selfProviderGasPriceCeil: BigInt!
+}
+
+type Condition_ {
+  inst: String!
+  data: String!
+}
+
+type Action_ {
+  addr: String!
+  data: String!
+  operation: BigInt!
+  dataFlow: BigInt!
+  value: BigInt!
+  termsOkCheck: Boolean!
 }
 
 type OwnershipTransferredEvent {
