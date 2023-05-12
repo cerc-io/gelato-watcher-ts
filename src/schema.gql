@@ -242,18 +242,32 @@ type ResultState {
   data: String!
 }
 
+enum OrderDirection {
+  asc
+  desc
+}
+
 type Query {
   events(blockHash: String!, contractAddress: String!, name: String): [ResultEvent!]
   eventsInRange(fromBlockNumber: Int!, toBlockNumber: Int!): [ResultEvent!]
   user(id: ID!, block: Block_height): User!
+  users(block: Block_height, first: Int = 100, skip: Int = 0): [User!]!
   taskReceiptWrapper(id: ID!, block: Block_height): TaskReceiptWrapper!
+  taskReceiptWrappers(where: TaskReceiptWrapper_filter, block: Block_height, orderBy: TaskReceiptWrapper_orderBy, orderDirection: OrderDirection, first: Int = 100, skip: Int = 0): [TaskReceiptWrapper!]!
   taskReceipt(id: ID!, block: Block_height): TaskReceipt!
+  taskReceipts(block: Block_height, first: Int = 100, skip: Int = 0): [TaskReceipt!]!
   taskCycle(id: ID!, block: Block_height): TaskCycle!
+  taskCycles(block: Block_height, first: Int = 100, skip: Int = 0): [TaskCycle!]!
   task(id: ID!, block: Block_height): Task!
+  tasks(block: Block_height, first: Int = 100, skip: Int = 0): [Task!]!
   provider(id: ID!, block: Block_height): Provider!
+  providers(block: Block_height, first: Int = 100, skip: Int = 0): [Provider!]!
   condition(id: ID!, block: Block_height): Condition!
+  conditions(block: Block_height, first: Int = 100, skip: Int = 0): [Condition!]!
   action(id: ID!, block: Block_height): Action!
+  actions(block: Block_height, first: Int = 100, skip: Int = 0): [Action!]!
   executor(id: ID!, block: Block_height): Executor!
+  executors(block: Block_height, first: Int = 100, skip: Int = 0): [Executor!]!
   getSyncStatus: SyncStatus
   getStateByCID(cid: String!): ResultState
   getState(blockHash: String!, contractAddress: String!, kind: String): ResultState
@@ -277,6 +291,15 @@ type TaskReceiptWrapper {
   executionDate: BigInt
   executionHash: Bytes
   selfProvided: Boolean!
+}
+
+input TaskReceiptWrapper_filter {
+  user: User
+  status: TaskReceiptStatus
+}
+
+enum TaskReceiptWrapper_orderBy {
+  id
 }
 
 type TaskReceipt {
