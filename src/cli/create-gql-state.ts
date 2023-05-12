@@ -116,11 +116,26 @@ const main = async (): Promise<void> => {
         });
       });
 
+      assert(blockProgress.cid);
+      assert(blockProgress.blockNumber);
+
+      const stateDataMeta = {
+        id: contractAddress,
+        kind: StateKind.Checkpoint,
+        parent: {
+          '/': null
+        },
+        ethBlock: {
+          cid: {
+            '/': blockProgress.cid
+          },
+          num: blockProgress.blockNumber
+        }
+      };
+
       const { cid, data } = await createOrUpdateStateData(
         checkpointData,
-        contractAddress,
-        blockProgress,
-        StateKind.Checkpoint
+        stateDataMeta
       );
 
       assert(data.meta);
