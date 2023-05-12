@@ -1,0 +1,7 @@
+query conditions($block: Block_height, $first: Int, $skip: Int){
+    conditions(block: $block, first: $first, skip: $skip){
+        id
+        inst
+        data
+    }
+}

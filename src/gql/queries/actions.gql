@@ -1,0 +1,11 @@
+query actions($block: Block_height, $first: Int, $skip: Int){
+    actions(block: $block, first: $first, skip: $skip){
+        id
+        addr
+        data
+        operation
+        dataFlow
+        value
+        termsOkCheck
+    }
+}

@@ -154,10 +154,6 @@ const main = async (): Promise<void> => {
 };
 
 const getGQLEntitiesForBlock = async (gqlClient: GraphQLClient, entityName: string, blockHash: string) => {
-  if (entityName !== 'TaskReceiptWrapper') {
-    return [];
-  }
-
   const queryName = pluralize(`${entityName.charAt(0).toLowerCase().concat(entityName.slice(1))}`);
   const importedQueries = queries as { [key: string]: string };
   const gqlQuery = importedQueries[queryName];

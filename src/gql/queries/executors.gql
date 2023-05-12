@@ -1,0 +1,6 @@
+query executors($block: Block_height, $first: Int, $skip: Int){
+    executors(block: $block, first: $first, skip: $skip){
+        id
+        addr
+    }
+}
