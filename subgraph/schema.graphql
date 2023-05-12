@@ -1,0 +1,92 @@
+type User @entity {
+  id: ID!
+  address: Bytes!
+  # taskReceiptWrappers: [TaskReceiptWrapper!]
+  signUpDate: BigInt!
+  executor: Bytes
+}
+
+type TaskReceiptWrapper @entity {
+  id: ID!
+  user: User!
+  taskReceipt: TaskReceipt!
+  submissionHash: Bytes!
+  status: TaskReceiptStatus!
+  submissionDate: BigInt!
+  selectedExecutor: Bytes!
+  executionDate: BigInt
+  executionHash: Bytes
+  selfProvided: Boolean!
+}
+
+enum TaskReceiptStatus {
+  awaitingExec
+  execSuccess
+  execReverted
+  canceled
+  expired
+}
+
+type TaskReceipt @entity {
+  id: ID!
+  userProxy: Bytes!
+  provider: Provider!
+  index: BigInt!
+  tasks: [Task!]
+  expiryDate: BigInt!
+  cycleId: BigInt!
+  submissionsLeft: BigInt!
+}
+
+type TaskCycle @entity {
+  id: ID!
+  taskReceiptWrappers: [TaskReceiptWrapper!]!
+}
+
+type Task @entity {
+  id: ID!
+  conditions: [Condition!]
+  actions: [Action!]
+  selfProviderGasLimit: BigInt!
+  selfProviderGasPriceCeil: BigInt!
+}
+
+type Provider @entity {
+  id: ID!
+  addr: Bytes!
+  module: Bytes!
+  taskCount: BigInt!
+}
+
+type Condition @entity {
+  id: ID!
+  inst: Bytes!
+  data: Bytes!
+}
+
+type Action @entity {
+  id: ID!
+  addr: Bytes!
+  data: Bytes!
+  operation: BigInt!
+  dataFlow: BigInt!
+  value: BigInt!
+  termsOkCheck: Boolean!
+}
+
+type Executor @entity {
+  id: ID!
+  addr: Bytes!
+}
+
+enum Operation {
+  Call
+  Delegatecall
+}
+
+enum DataFlow {
+  None
+  In
+  Out
+  InAndOut
+}
