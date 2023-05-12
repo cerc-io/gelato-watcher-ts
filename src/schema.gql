@@ -294,7 +294,7 @@ type TaskReceiptWrapper {
 }
 
 input TaskReceiptWrapper_filter {
-  user: User
+  user: String
   status: TaskReceiptStatus
 }
 

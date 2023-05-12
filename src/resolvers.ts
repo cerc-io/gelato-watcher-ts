@@ -17,6 +17,7 @@ import {
   getResultState,
   IndexerInterface,
   BlockHeight,
+  OrderDirection,
   jsonBigIntStringReplacer,
   EventWatcher,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -100,6 +101,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         return indexer.getSubgraphEntity(User, id, block, info.fieldNodes[0].selectionSet.selections);
       },
 
+      users: async (
+        _: any,
+        { block = {}, first, skip }: { block: BlockHeight, first: number, skip: number },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('users', JSON.stringify(block, jsonBigIntStringReplacer), first, skip);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('users').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          User,
+          block,
+          {},
+          { limit: first, skip },
+          info.fieldNodes[0].selectionSet.selections
+        );
+      },
+
       taskReceiptWrapper: async (
         _: any,
         { id, block = {} }: { id: string, block: BlockHeight },
@@ -115,6 +139,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         // setGQLCacheHints(info, block, gqlCacheConfig);
 
         return indexer.getSubgraphEntity(TaskReceiptWrapper, id, block, info.fieldNodes[0].selectionSet.selections);
+      },
+
+      taskReceiptWrappers: async (
+        _: any,
+        { block = {}, where, first, skip, orderBy, orderDirection }: { block: BlockHeight, where: { [key: string]: any }, first: number, skip: number, orderBy: string, orderDirection: OrderDirection },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('taskReceiptWrappers', JSON.stringify(block, jsonBigIntStringReplacer), JSON.stringify(where, jsonBigIntStringReplacer), first, skip, orderBy, orderDirection);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('taskReceiptWrappers').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          TaskReceiptWrapper,
+          block,
+          where,
+          { limit: first, skip, orderBy, orderDirection },
+          info.fieldNodes[0].selectionSet.selections
+        );
       },
 
       taskReceipt: async (
@@ -134,6 +181,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         return indexer.getSubgraphEntity(TaskReceipt, id, block, info.fieldNodes[0].selectionSet.selections);
       },
 
+      taskReceipts: async (
+        _: any,
+        { block = {}, first, skip }: { block: BlockHeight, first: number, skip: number },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('taskReceipts', JSON.stringify(block, jsonBigIntStringReplacer), first, skip);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('taskReceipts').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          TaskReceipt,
+          block,
+          {},
+          { limit: first, skip },
+          info.fieldNodes[0].selectionSet.selections
+        );
+      },
+
       taskCycle: async (
         _: any,
         { id, block = {} }: { id: string, block: BlockHeight },
@@ -149,6 +219,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         // setGQLCacheHints(info, block, gqlCacheConfig);
 
         return indexer.getSubgraphEntity(TaskCycle, id, block, info.fieldNodes[0].selectionSet.selections);
+      },
+
+      taskCycles: async (
+        _: any,
+        { block = {}, first, skip }: { block: BlockHeight, first: number, skip: number },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('taskCycles', JSON.stringify(block, jsonBigIntStringReplacer), first, skip);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('taskCycles').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          TaskCycle,
+          block,
+          {},
+          { limit: first, skip },
+          info.fieldNodes[0].selectionSet.selections
+        );
       },
 
       task: async (
@@ -168,6 +261,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         return indexer.getSubgraphEntity(Task, id, block, info.fieldNodes[0].selectionSet.selections);
       },
 
+      tasks: async (
+        _: any,
+        { block = {}, first, skip }: { block: BlockHeight, first: number, skip: number },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('tasks', JSON.stringify(block, jsonBigIntStringReplacer), first, skip);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('tasks').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          Task,
+          block,
+          {},
+          { limit: first, skip },
+          info.fieldNodes[0].selectionSet.selections
+        );
+      },
+
       provider: async (
         _: any,
         { id, block = {} }: { id: string, block: BlockHeight },
@@ -183,6 +299,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         // setGQLCacheHints(info, block, gqlCacheConfig);
 
         return indexer.getSubgraphEntity(Provider, id, block, info.fieldNodes[0].selectionSet.selections);
+      },
+
+      providers: async (
+        _: any,
+        { block = {}, first, skip }: { block: BlockHeight, first: number, skip: number },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('providers', JSON.stringify(block, jsonBigIntStringReplacer), first, skip);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('providers').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          Provider,
+          block,
+          {},
+          { limit: first, skip },
+          info.fieldNodes[0].selectionSet.selections
+        );
       },
 
       condition: async (
@@ -202,6 +341,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         return indexer.getSubgraphEntity(Condition, id, block, info.fieldNodes[0].selectionSet.selections);
       },
 
+      conditions: async (
+        _: any,
+        { block = {}, first, skip }: { block: BlockHeight, first: number, skip: number },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('conditions', JSON.stringify(block, jsonBigIntStringReplacer), first, skip);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('conditions').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          Condition,
+          block,
+          {},
+          { limit: first, skip },
+          info.fieldNodes[0].selectionSet.selections
+        );
+      },
+
       action: async (
         _: any,
         { id, block = {} }: { id: string, block: BlockHeight },
@@ -219,6 +381,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         return indexer.getSubgraphEntity(Action, id, block, info.fieldNodes[0].selectionSet.selections);
       },
 
+      actions: async (
+        _: any,
+        { block = {}, first, skip }: { block: BlockHeight, first: number, skip: number },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('actions', JSON.stringify(block, jsonBigIntStringReplacer), first, skip);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('actions').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          Action,
+          block,
+          {},
+          { limit: first, skip },
+          info.fieldNodes[0].selectionSet.selections
+        );
+      },
+
       executor: async (
         _: any,
         { id, block = {} }: { id: string, block: BlockHeight },
@@ -234,6 +419,29 @@ export const createResolvers = async (indexerArg: IndexerInterface, eventWatcher
         // setGQLCacheHints(info, block, gqlCacheConfig);
 
         return indexer.getSubgraphEntity(Executor, id, block, info.fieldNodes[0].selectionSet.selections);
+      },
+
+      executors: async (
+        _: any,
+        { block = {}, first, skip }: { block: BlockHeight, first: number, skip: number },
+        __: any,
+        info: GraphQLResolveInfo
+      ) => {
+        log('executors', JSON.stringify(block, jsonBigIntStringReplacer), first, skip);
+        gqlTotalQueryCount.inc(1);
+        gqlQueryCount.labels('executors').inc(1);
+        assert(info.fieldNodes[0].selectionSet);
+
+        // Set cache-control hints
+        // setGQLCacheHints(info, block, gqlCacheConfig);
+
+        return indexer.getSubgraphEntities(
+          Executor,
+          block,
+          {},
+          { limit: first, skip },
+          info.fieldNodes[0].selectionSet.selections
+        );
       },
 
       events: async (_: any, { blockHash, contractAddress, name }: { blockHash: string, contractAddress: string, name?: string }) => {
