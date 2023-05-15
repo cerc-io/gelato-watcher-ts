@@ -16,7 +16,6 @@ export const getSyncStatus = fs.readFileSync(path.join(__dirname, 'getSyncStatus
 export const getStateByCID = fs.readFileSync(path.join(__dirname, 'getStateByCID.gql'), 'utf8');
 export const getState = fs.readFileSync(path.join(__dirname, 'getState.gql'), 'utf8');
 
-// TODO: Generate multiple entities queries in codegen
 export const users = fs.readFileSync(path.join(__dirname, 'users.gql'), 'utf8');
 export const taskReceiptWrappers = fs.readFileSync(path.join(__dirname, 'taskReceiptWrappers.gql'), 'utf8');
 export const taskReceipts = fs.readFileSync(path.join(__dirname, 'taskReceipts.gql'), 'utf8');
