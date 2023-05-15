@@ -1,0 +1,21 @@
+query taskReceipts($block: Block_height, $first: Int, $skip: Int){
+    taskReceipts(block: $block, first: $first, skip: $skip){
+        id
+        userProxy
+        provider{
+            id
+            addr
+            module
+            taskCount
+        }
+        index
+        tasks{
+            id
+            selfProviderGasLimit
+            selfProviderGasPriceCeil
+        }
+        expiryDate
+        cycleId
+        submissionsLeft
+    }
+}

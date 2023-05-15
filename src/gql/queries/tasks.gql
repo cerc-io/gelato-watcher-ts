@@ -1,0 +1,21 @@
+query tasks($block: Block_height, $first: Int, $skip: Int){
+    tasks(block: $block, first: $first, skip: $skip){
+        id
+        conditions{
+            id
+            inst
+            data
+        }
+        actions{
+            id
+            addr
+            data
+            operation
+            dataFlow
+            value
+            termsOkCheck
+        }
+        selfProviderGasLimit
+        selfProviderGasPriceCeil
+    }
+}

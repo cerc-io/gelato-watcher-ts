@@ -170,10 +170,10 @@
     binaryen "101.0.0-nightly.20210723"
     long "^4.0.0"
 
-"@cerc-io/cache@^0.2.41":
-  version "0.2.41"
-  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fcache/-/0.2.41/cache-0.2.41.tgz#cf9f274d25d67e98a7c2bfa90a8ad74b87a02799"
-  integrity sha512-cBqaZQDtLQdBMFsAP2otKhPMLBilfBpeUbEMaZsnpfMA8D19LX0xcRNEuSDK3EvB77myDbehGF1RG7Wz7gTlaw==
+"@cerc-io/cache@^0.2.43":
+  version "0.2.43"
+  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fcache/-/0.2.43/cache-0.2.43.tgz#fd3cd504dfd4988d3ed9a0e5917aecd7a5c1b562"
+  integrity sha512-1Uelf6k3VKtb7hRXIgNTtj5IaHLKTR1NedXZU9wA64cxTguMYxxZhfrRHQNx3CbQTN6jcwNa7VjR9tAwE/N/mw==
   dependencies:
     canonical-json "^0.0.4"
     debug "^4.3.1"
@@ -181,13 +181,13 @@
     fs-extra "^10.0.0"
     level "^7.0.0"
 
-"@cerc-io/cli@^0.2.41":
-  version "0.2.41"
-  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fcli/-/0.2.41/cli-0.2.41.tgz#d6983b41575888c122a973791c5ff50abae328b6"
-  integrity sha512-Ua/qUUVFhApTLqjZ8UWBhflIAvEoGCKT4Oq+IlARZt8qPEyrgIZzib95fHlqY2tvkT8ynPcUP1zhM0YO4v/pgg==
+"@cerc-io/cli@^0.2.43":
+  version "0.2.43"
+  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fcli/-/0.2.43/cli-0.2.43.tgz#91bb4cbe4e624312c3867a325c95c017b6806fd5"
+  integrity sha512-D/qOUAwO1IHXmkPDdsnoLVEaJtt4XFdRsJ2TXLZDdoJzVxqZFFAgM0z4YmyOUr9+4UhFQ1REKGy80iXa8ouELQ==
   dependencies:
-    "@cerc-io/peer" "^0.2.41"
-    "@cerc-io/util" "^0.2.41"
+    "@cerc-io/peer" "^0.2.43"
+    "@cerc-io/util" "^0.2.43"
     "@ethersproject/providers" "^5.4.4"
     "@graphql-tools/utils" "^9.1.1"
     "@ipld/dag-cbor" "^8.0.0"
@@ -200,16 +200,16 @@
     typeorm "^0.2.32"
     yargs "^17.0.1"
 
-"@cerc-io/graph-node@^0.2.41":
-  version "0.2.41"
-  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fgraph-node/-/0.2.41/graph-node-0.2.41.tgz#1c452320b1b26cf740abc713f42862e3a7f040bf"
-  integrity sha512-gyioT/KFcYK58gPBAFU5v0UiFcSvuoD7nLw9WIrqWM/ca27RbKGCu1/ohtrmN63Nq7BnFL3RCXOyYPBateHJIQ==
+"@cerc-io/graph-node@^0.2.43":
+  version "0.2.43"
+  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fgraph-node/-/0.2.43/graph-node-0.2.43.tgz#5d10780ae8f157aac530f6d75bc135d084c5ac75"
+  integrity sha512-XOfSzfbv8wxsGMNqwCo+cJubwRWZsOc0BjXFbIzKfN0NK8BtlG/e5lOtpdwr+THcAWn4oO24VggstEu6bs225w==
   dependencies:
     "@apollo/client" "^3.3.19"
     "@cerc-io/assemblyscript" "0.19.10-watcher-ts-0.1.2"
-    "@cerc-io/cache" "^0.2.41"
-    "@cerc-io/ipld-eth-client" "^0.2.41"
-    "@cerc-io/util" "^0.2.41"
+    "@cerc-io/cache" "^0.2.43"
+    "@cerc-io/ipld-eth-client" "^0.2.43"
+    "@cerc-io/util" "^0.2.43"
     "@types/json-diff" "^0.5.2"
     "@types/yargs" "^17.0.0"
     bn.js "^4.11.9"
@@ -226,13 +226,13 @@
     typeorm-naming-strategies "^2.0.0"
     yargs "^17.0.1"
 
-"@cerc-io/ipld-eth-client@^0.2.41":
-  version "0.2.41"
-  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fipld-eth-client/-/0.2.41/ipld-eth-client-0.2.41.tgz#edf33a6aab23f24442f0f6288f1eedd1cf20c02a"
-  integrity sha512-1sxCpza6Q9bqVymWR7L4K+PFAkJLbt6pU6TSaH61A8fUg+rMzkjATFScT7OAxvQkhLOQ3gQ/cr9fAsWCR1CP4w==
+"@cerc-io/ipld-eth-client@^0.2.43":
+  version "0.2.43"
+  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fipld-eth-client/-/0.2.43/ipld-eth-client-0.2.43.tgz#f225bd46fd83a352b6f9fb605fe029f94ea59aa9"
+  integrity sha512-Zq9xh+fjekgg17SH6Fj2Q6hF6WnP/mLFYUq0CDwa3bIFOIGof110vrPH1y/BMBLOjyW54F3gaJmo5YBnPaNABA==
   dependencies:
     "@apollo/client" "^3.7.1"
-    "@cerc-io/cache" "^0.2.41"
+    "@cerc-io/cache" "^0.2.43"
     cross-fetch "^3.1.4"
     debug "^4.3.1"
     ethers "^5.4.4"
@@ -314,10 +314,10 @@
     wherearewe "^2.0.0"
     xsalsa20 "^1.1.0"
 
-"@cerc-io/peer@^0.2.41":
-  version "0.2.41"
-  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fpeer/-/0.2.41/peer-0.2.41.tgz#fbf13eba876f9a3428cbf27b775ed60a67075847"
-  integrity sha512-nYFrTHoke94J6DRXdPCumFIa+8hzO7RQOn/8UondESlASWRTKDWsuDAvU+Bof4jgwb8O/egNGr0em3CLYGf9GA==
+"@cerc-io/peer@^0.2.43":
+  version "0.2.43"
+  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fpeer/-/0.2.43/peer-0.2.43.tgz#0375e86c7a9faad08dadb6754729b1e3540c8332"
+  integrity sha512-oBkLH4Ei3/R5Gs+9mFnc9sbaWdpEaeGeBUSpd+BqtJI2O3JZRy0Di5//GG7+ailZNQuXtBiykr7m+zyfD6KPGQ==
   dependencies:
     "@cerc-io/libp2p" "0.42.2-laconic-0.1.3"
     "@cerc-io/prometheus-metrics" "1.1.4"
@@ -355,20 +355,20 @@
     it-stream-types "^1.0.4"
     promjs "^0.4.2"
 
-"@cerc-io/solidity-mapper@^0.2.41":
-  version "0.2.41"
-  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fsolidity-mapper/-/0.2.41/solidity-mapper-0.2.41.tgz#8cee47d57cfbfe87e6b197e87ac25a63ab15e848"
-  integrity sha512-M5OjpxDT5vqUUlMs9yZfHI9DEwGAJKVjJeIKZIXPKMa1PWcmqM6Qy0jIJFkEH34fpX+LAGXky32sUexXMCH5Jw==
+"@cerc-io/solidity-mapper@^0.2.43":
+  version "0.2.43"
+  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Fsolidity-mapper/-/0.2.43/solidity-mapper-0.2.43.tgz#88e5dde9e860e4a5ae52c4aa6272b221d953c63e"
+  integrity sha512-ZpGvB6EXDJf1IQHNg9FuolxZyEXKadANiqHyFywTHYbx/Q33tSE0sDqTjt5jBk8mRRnFEAIcrP/y+9aL/8HcOw==
   dependencies:
     dotenv "^10.0.0"
 
-"@cerc-io/util@^0.2.41":
-  version "0.2.41"
-  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Futil/-/0.2.41/util-0.2.41.tgz#45ca00a3d0ff218ba0a33107427438360972c780"
-  integrity sha512-XHynQZ9SUrEjD4/4kBV5i3ry5mRfH3oPZvCXIHjbxjmmsehS46oqkVskmHCvXVLig7/TDUY/ax3HFXq/IHaydg==
+"@cerc-io/util@^0.2.43":
+  version "0.2.43"
+  resolved "https://git.vdb.to/api/packages/cerc-io/npm/%40cerc-io%2Futil/-/0.2.43/util-0.2.43.tgz#e80466f203dfb825fed123dbfaa78e20b01aaf16"
+  integrity sha512-YOsYZG1dHeGQtD7wY/oQB/oALw0TU0L0ik2gEtr/j49rsH/cXiZPIkqWH+rnelsH3qYcyHf3TPUQfjsw3QrJCg==
   dependencies:
     "@apollo/utils.keyvaluecache" "^1.0.1"
-    "@cerc-io/solidity-mapper" "^0.2.41"
+    "@cerc-io/solidity-mapper" "^0.2.43"
     "@ethersproject/providers" "^5.4.4"
     "@graphql-tools/schema" "^9.0.10"
     "@graphql-tools/utils" "^9.1.1"

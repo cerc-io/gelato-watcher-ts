@@ -15,32 +15,15 @@ dataSources:
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - LogCanExecFailed
-        - LogExecReverted
-        - LogExecSuccess
-        - LogExecutorAssignedExecutor
-        - LogExecutorBalanceWithdrawn
-        - LogExecutorStaked
-        - LogExecutorSuccessShareSet
-        - LogExecutorUnstaked
-        - LogFundsProvided
-        - LogFundsUnprovided
-        - LogGelatoGasPriceOracleSet
-        - LogGelatoMaxGasSet
-        - LogInternalGasRequirementSet
-        - LogMinExecutorStakeSet
-        - LogOracleRequestDataSet
-        - LogProviderAssignedExecutor
-        - LogProviderModuleAdded
-        - LogProviderModuleRemoved
-        - LogSysAdminFundsWithdrawn
-        - LogSysAdminSuccessShareSet
-        - LogTaskCancelled
-        - LogTaskSpecGasPriceCeilSet
-        - LogTaskSpecProvided
-        - LogTaskSpecUnprovided
-        - LogTaskSubmitted
-        - OwnershipTransferred
+        - User
+        - TaskReceiptWrapper
+        - TaskReceipt
+        - TaskCycle
+        - Task
+        - Provider
+        - Condition
+        - Action
+        - Executor
       abis:
         - name: Contract
           file: Contract/abis/Contract.json

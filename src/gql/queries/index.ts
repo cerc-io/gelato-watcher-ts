@@ -15,3 +15,13 @@ export const executor = fs.readFileSync(path.join(__dirname, 'executor.gql'), 'u
 export const getSyncStatus = fs.readFileSync(path.join(__dirname, 'getSyncStatus.gql'), 'utf8');
 export const getStateByCID = fs.readFileSync(path.join(__dirname, 'getStateByCID.gql'), 'utf8');
 export const getState = fs.readFileSync(path.join(__dirname, 'getState.gql'), 'utf8');
+
+export const users = fs.readFileSync(path.join(__dirname, 'users.gql'), 'utf8');
+export const taskReceiptWrappers = fs.readFileSync(path.join(__dirname, 'taskReceiptWrappers.gql'), 'utf8');
+export const taskReceipts = fs.readFileSync(path.join(__dirname, 'taskReceipts.gql'), 'utf8');
+export const taskCycles = fs.readFileSync(path.join(__dirname, 'taskCycles.gql'), 'utf8');
+export const tasks = fs.readFileSync(path.join(__dirname, 'tasks.gql'), 'utf8');
+export const providers = fs.readFileSync(path.join(__dirname, 'providers.gql'), 'utf8');
+export const conditions = fs.readFileSync(path.join(__dirname, 'conditions.gql'), 'utf8');
+export const actions = fs.readFileSync(path.join(__dirname, 'actions.gql'), 'utf8');
+export const executors = fs.readFileSync(path.join(__dirname, 'executors.gql'), 'utf8');

@@ -1,0 +1,15 @@
+query taskCycles($block: Block_height, $first: Int, $skip: Int){
+    taskCycles(block: $block, first: $first, skip: $skip){
+        id
+        taskReceiptWrappers{
+            id
+            submissionHash
+            status
+            submissionDate
+            selectedExecutor
+            executionDate
+            executionHash
+            selfProvided
+        }
+    }
+}
